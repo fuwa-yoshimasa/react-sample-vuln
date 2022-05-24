@@ -1,4 +1,4 @@
-import { NextPageWithLayout } from "next";
+import { NextPageWithDefaultLayout, NextPageWithLayout } from "next";
 import React from "react";
 import { Col, Container, Modal, Row, Spinner } from "react-bootstrap";
 import Loading from "../../components/commons/Loading";
@@ -7,7 +7,7 @@ import V001SearchInput from "../../components/V000/V001SearchInput";
 import V001VulnList from "../../components/V000/V001VulnList";
 import { useAppSelector } from "../../store";
 
-const V001: NextPageWithLayout = () => {
+const V001: NextPageWithDefaultLayout = () => {
     const loading = useAppSelector((state) => state.v001.loading);
     console.log("V001");
     return (
@@ -29,6 +29,6 @@ const V001: NextPageWithLayout = () => {
     );
 };
 
-V001.getLayout = (page) => <Layout subTitle="脆弱性検索">{page}</Layout>;
+V001.subTitle = "脆弱性検索";
 
 export default V001;

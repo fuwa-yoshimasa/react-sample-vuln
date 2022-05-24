@@ -1,4 +1,4 @@
-import { NextPageWithLayout } from "next";
+import { NextPageWithDefaultLayout, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import Layout from "../../components/Layout";
@@ -9,7 +9,7 @@ type V002QueryType = {
     cve: string;
 };
 
-const V002: NextPageWithLayout = () => {
+const V002: NextPageWithDefaultLayout = () => {
     const router = useRouter();
     const cve = router.query.cve as string;
     return (
@@ -20,6 +20,6 @@ const V002: NextPageWithLayout = () => {
     );
 };
 
-V002.getLayout = (page) => <Layout subTitle="脆弱性詳細">{page}</Layout>;
+V002.subTitle = "脆弱性詳細";
 
 export default V002;
