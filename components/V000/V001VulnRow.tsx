@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { memo } from "react";
 import { DefCveItem } from "../../types/public_api/cve-types";
-import styles from "./V002Detail.module.css";
+import styles from "../../styles/V001/V001VulnList.module.css";
 
 export type V001VulnRowProps = {
     cveItem: DefCveItem;

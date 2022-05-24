@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { NextPage, NextPageWithDefaultLayout } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,32 +13,18 @@ import {
 } from "react-bootstrap";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
+const Home: NextPageWithDefaultLayout = () => {
     return (
         <div>
-            <header>
-                <Navbar bg="dark" variant="dark">
-                    <Container>
-                        <Navbar.Brand href="#home">
-                            Vulnerabilities Sample
-                        </Navbar.Brand>
-                    </Container>
-                </Navbar>
-            </header>
             <Container>
                 <Row>
                     <Col>
                         <Card style={{ width: "18rem" }}>
-                            <Card.Header bg="primary">Menu</Card.Header>
+                            <Card.Header>Menu</Card.Header>
                             <ListGroup variant="flush">
                                 <ListGroup.Item>
                                     <Link href={"/V000/V001"}>
                                         Vulnerabilities
-                                    </Link>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <Link href={"/V000useContext/V001"}>
-                                        Vulnerabilities (useContext)
                                     </Link>
                                 </ListGroup.Item>
                             </ListGroup>
@@ -49,5 +35,6 @@ const Home: NextPage = () => {
         </div>
     );
 };
+Home.subTitle = "Menu";
 
 export default Home;
