@@ -5,13 +5,17 @@ import { CveResponse } from "../../types/public_api/cve-apires-types";
 import store, { useAppSelector } from "../../store";
 import Pagenation from "../commons/Pagenation";
 import V001VulnRow from "./V001VulnRow";
+import { useSearchVulnData } from "../../hooks/V000/V001Hooks";
 
 const V001VulnList = () => {
+    const searchVulnData = useSearchVulnData();
     const vulnData = useAppSelector((state) => state.v001.vulnData);
+    const searchText = useAppSelector((state) => state.v001.searchText);
     console.log(vulnData);
     const handleSelectPage = (page: number, startIndex: number) => {
         console.log(page);
         console.log(startIndex);
+        searchVulnData(searchText, startIndex);
     };
 
     console.log("V001VulnList");

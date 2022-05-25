@@ -1,7 +1,6 @@
 import { TypedUseSelectorHook } from "react-redux";
 import { useAppDispatch } from "../../store";
 import { searchVulnData, setSearchText } from "../../store/V000/V001Reducer";
-import { useEndLoading, useStartLoading } from "../AppHooks";
 
 // hooks
 
@@ -18,8 +17,8 @@ export const useSetSearchText = () => {
 export const useSearchVulnData = () => {
     const dispatch = useAppDispatch();
 
-    const searcher = (setSearchText: string) => {
-        dispatch(searchVulnData(setSearchText));
+    const searcher = (searchText: string, startIndex: number) => {
+        dispatch(searchVulnData({ searchText, startIndex }));
     };
     return searcher;
 };

@@ -53,12 +53,18 @@ export const V001Slice = createSlice({
     },
 });
 
+// 脆弱性検索の引数
+type SearchVulnDataArgs = {
+    searchText: string;
+    startIndex: number;
+};
+
 // 非同期のAction
-export const searchVulnData = createAsyncThunk<CveResponse, string>(
+export const searchVulnData = createAsyncThunk<CveResponse, SearchVulnDataArgs>(
     "V001/searchVulnData",
-    async (searchText) => {
+    async ({ searchText = "", startIndex = 0 }) => {
         return await fetch(
-            `https://services.nvd.nist.gov/rest/json/cves/1.0/?keyword=${searchText}`
+            `https://services.nvd.nist.gov/rest/json/cves/1.0/?startIndex=${startIndex}&keyword=${searchText}`
         ).then((r) => {
             return r.json();
         });

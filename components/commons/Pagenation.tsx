@@ -39,6 +39,10 @@ const Pagenation: React.FC<PropType> = ({
     const lastDispPage =
         dispPageList[dispPageList.length - 1]?.page ?? totalPage;
     const nextEllipsis = totalPage > lastDispPage;
+    // 前へボタンが押せるか
+    const disablePrev = currentPage === 1;
+    // 次へボタンが押せるか
+    const disableNext = currentPage === totalPage;
     // 前へページの情報
     const prevInfo = dispPageList.find(
         (pageInfo) => pageInfo.page === currentPage - 1
@@ -57,7 +61,7 @@ const Pagenation: React.FC<PropType> = ({
                 onClick={() => clickPage(1, 0)}
             />
             <BSPagination.Prev
-                disabled={!prevEllipsis}
+                disabled={disablePrev}
                 onClick={() => clickPage(prevInfo.page, prevInfo.startIndex)}
             />
             {prevEllipsis && <BSPagination.Ellipsis />}
@@ -72,7 +76,7 @@ const Pagenation: React.FC<PropType> = ({
             ))}
             {nextEllipsis && <BSPagination.Ellipsis />}
             <BSPagination.Next
-                disabled={!nextEllipsis}
+                disabled={disableNext}
                 onClick={() => clickPage(nextInfo.page, nextInfo.startIndex)}
             />
             <BSPagination.Last
