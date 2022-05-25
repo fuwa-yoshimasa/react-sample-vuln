@@ -17,7 +17,7 @@ const V001SearchInput: React.FC = () => {
     const handleChangeSearchText = useSetSearchText();
 
     const handleClickSearchButton = () => {
-        searchVulnData(searchText);
+        searchVulnData(searchText, 0);
     };
 
     console.log("V001SearchInput");
@@ -47,6 +47,7 @@ const V001SearchInput: React.FC = () => {
                                 variant="primary"
                                 className="mb-2"
                                 onClick={handleClickSearchButton}
+                                size="lg"
                             >
                                 検索
                             </Button>

@@ -34,6 +34,9 @@ export const V001Slice = createSlice({
         ) => {
             state.vulnData = action.payload;
         },
+        clearVulnData: (state: V001StateType) => {
+            state.vulnData = initialState.vulnData;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(searchVulnData.pending, (state: V001StateType) => {
@@ -72,7 +75,7 @@ export const searchVulnData = createAsyncThunk<CveResponse, SearchVulnDataArgs>(
 );
 
 // このStateのAction
-export const { setSearchText, setVulnData } = V001Slice.actions;
+export const { setSearchText, setVulnData, clearVulnData } = V001Slice.actions;
 
 // このStateのReducer
 export default V001Slice.reducer;
