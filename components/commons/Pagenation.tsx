@@ -1,5 +1,11 @@
 import React from "react";
 import BSPagination from "react-bootstrap/Pagination";
+import {
+    useCalcCurrentPage,
+    useCalcTotalPage,
+    useCreatePageInfo,
+    useCreatePageList,
+} from "../../hooks/commons/PagenationHooks";
 
 type PropType = {
     perPage: number;
@@ -16,37 +22,63 @@ const Pagenation: React.FC<PropType> = ({
     totalResults,
     clickPage,
 }) => {
-    // 全ページ計算
-    let totalPage = totalResults / perPage;
-    totalPage = isNaN(totalPage) ? 0 : Math.ceil(totalPage);
+    // ページ情報作成
+    const dispPageCount = 5;
+    const createPageInfo = useCreatePageInfo();
+    const { totalPage, currentPage, dispPageList } = createPageInfo(
+        perPage,
+        totalResults,
+        index,
+        dispPageCount
+    );
 
-    // 全ページリストから、表示ページ決定
-    const pageList = [...Array(totalPage)].map((v, k) => k + 1);
-    const currentPage =
-        pageList.filter(
-            (p) => (p - 1) * perPage <= index && index < p * perPage
-        )[0] ?? 1;
-
-    // 表示ページから、表示する前後のページ決定
-    let startPage = (1 - MAX_DISP_PAGE) / 2;
-    startPage = startPage < 1 ? 1 : startPage;
-    let endPage = (1 + MAX_DISP_PAGE) / 2;
-    endPage = endPage > totalPage ? totalPage : endPage;
-    const dispPageList = pageList.filter((p) => startPage <= p && p <= endPage);
+    // 1ページ目がページボタンに表示されている場合は、戻るボタンとか無効にする
+    const firstDispPage = dispPageList[0]?.page ?? 0;
+    const prevEllipsis = 1 < firstDispPage;
+    // 最終ページ目がページボタンに表示されている場合は、次へボタンとか無効にする
+    const lastDispPage =
+        dispPageList[dispPageList.length - 1]?.page ?? totalPage;
+    const nextEllipsis = totalPage > lastDispPage;
+    // 前へページの情報
+    const prevInfo = dispPageList.find(
+        (pageInfo) => pageInfo.page === currentPage - 1
+    ) ?? { page: 1, startIndex: 0 };
+    // 次へページの情報
+    const nextInfo = dispPageList.find(
+        (pageInfo) => pageInfo.page === currentPage + 1
+    ) ?? { page: 1, startIndex: 0 };
+    // 最終ページの情報
+    const lastPageIndex = perPage * (totalPage - 1);
 
     return (
         <BSPagination>
-            <BSPagination.First />
-            <BSPagination.Prev />
-            <BSPagination.Ellipsis />
-            {dispPageList.map((page) => (
-                <BSPagination.Item key={page} active={currentPage === page}>
+            <BSPagination.First
+                disabled={!prevEllipsis}
+                onClick={() => clickPage(1, 0)}
+            />
+            <BSPagination.Prev
+                disabled={!prevEllipsis}
+                onClick={() => clickPage(prevInfo.page, prevInfo.startIndex)}
+            />
+            {prevEllipsis && <BSPagination.Ellipsis />}
+            {dispPageList.map(({ page, startIndex }) => (
+                <BSPagination.Item
+                    key={page}
+                    active={currentPage === page}
+                    onClick={() => clickPage(page, startIndex)}
+                >
                     {page}
                 </BSPagination.Item>
             ))}
-            <BSPagination.Ellipsis />
-            <BSPagination.Next />
-            <BSPagination.Last />
+            {nextEllipsis && <BSPagination.Ellipsis />}
+            <BSPagination.Next
+                disabled={!nextEllipsis}
+                onClick={() => clickPage(nextInfo.page, nextInfo.startIndex)}
+            />
+            <BSPagination.Last
+                disabled={!nextEllipsis}
+                onClick={() => clickPage(totalPage, lastPageIndex)}
+            />
         </BSPagination>
     );
 };
