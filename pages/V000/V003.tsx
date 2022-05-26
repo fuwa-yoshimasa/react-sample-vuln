@@ -1,13 +1,17 @@
 import { NextPageWithDefaultLayout } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import V003Loading from "../../components/V000/V003Loading";
+import { Col, Container, Row } from "react-bootstrap";
+import Loading from "../../components/commons/Loading";
 import { useGetVulnData } from "../../hooks/V000/V003Hooks";
-import { useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 
 const V003: NextPageWithDefaultLayout = () => {
     const router = useRouter();
     const getVulnData = useGetVulnData();
+    const test = useAppSelector((state) => state.v003.inputVulnData);
+
+    const loadingSelector = (state) => state.v003.loading;
 
     const cve = router.query.cve as string;
     console.log(cve);
@@ -20,9 +24,14 @@ const V003: NextPageWithDefaultLayout = () => {
     }, [cve]);
 
     return (
-        <div>
-            <V003Loading />
-        </div>
+        <>
+            <Container>
+                <Row sm={1}>
+                    <Col>{test.description}</Col>
+                </Row>
+                <Loading selector={loadingSelector} />
+            </Container>
+        </>
     );
 };
 

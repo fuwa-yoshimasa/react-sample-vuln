@@ -1,16 +1,24 @@
 import React from "react";
 import { Modal, Spinner } from "react-bootstrap";
-import { useAppSelector } from "../../store";
+import { RootState, useAppSelector } from "../../store";
 
 type PropsType = {
     loading?: boolean;
+    selector?: (state: RootState) => boolean;
 };
 
-const Loading: React.FC<PropsType> = ({ loading = false }) => {
-    const globalLoading = useAppSelector((state) => state.app.loading);
-    console.log(`Loading = ${loading || globalLoading}`);
+const Loading: React.FC<PropsType> = ({ loading, selector }) => {
+    const loadingSelector = selector ?? ((state) => state.app.loading);
+    const storeLoading = useAppSelector(loadingSelector);
+
+    let isLoading = loading;
+    if (isLoading == undefined) {
+        isLoading = storeLoading;
+    }
+
+    console.log(`Loading = ${isLoading}`);
     return (
-        <Modal show={loading || globalLoading} size="sm" centered={true}>
+        <Modal show={isLoading} size="sm" centered={true}>
             <Modal.Body className="text-center">
                 <div>
                     <Spinner animation="border" />

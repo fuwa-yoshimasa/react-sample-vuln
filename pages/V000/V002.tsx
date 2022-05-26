@@ -1,6 +1,7 @@
 import { NextPageWithDefaultLayout, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import React from "react";
+import Loading from "../../components/commons/Loading";
 import Layout from "../../components/Layout";
 import V002Buttons from "../../components/V000/V002Buttons";
 import V002Detail from "../../components/V000/V002Detail";
@@ -16,6 +17,7 @@ const V002: NextPageWithDefaultLayout = () => {
         <div>
             <V002Detail cve={cve} />
             <V002Buttons cve={cve} />
+            <Loading />
         </div>
     );
 };
