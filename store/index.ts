@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppSlice } from "./AppStore";
 import { V001Slice } from "./V000/V001Reducer";
+import { V003Slice } from "./V000/V003Reducer";
 
 // 全体のStoreを合体
 const store = configureStore({
     reducer: {
         app: AppSlice.reducer,
         v001: V001Slice.reducer,
+        v003: V003Slice.reducer,
     },
 });
 

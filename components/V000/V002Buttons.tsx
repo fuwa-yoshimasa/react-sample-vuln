@@ -8,7 +8,7 @@ type PropType = {
 
 const V002Buttons: React.FC<PropType> = ({ cve }) => {
     return (
-        <Container className="mt-2">
+        <Container className="mt-2 mb-2">
             <Row>
                 <Col sm={6}>
                     <Link
@@ -23,9 +23,16 @@ const V002Buttons: React.FC<PropType> = ({ cve }) => {
                     </Link>
                 </Col>
                 <Col sm={6} className="d-flex flex-row-reverse">
-                    <Button variant="primary" size="lg">
-                        編集
-                    </Button>
+                    <Link
+                        href={{
+                            pathname: "/V000/V003",
+                            query: { cve },
+                        }}
+                    >
+                        <Button variant="primary" size="lg">
+                            編集
+                        </Button>
+                    </Link>
                 </Col>
             </Row>
         </Container>
