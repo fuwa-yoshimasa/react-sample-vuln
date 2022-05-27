@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
-const V001Buttons: React.FC = () => {
+const V001Buttons = () => {
     return (
         <Container className="mb-2">
             <Row>

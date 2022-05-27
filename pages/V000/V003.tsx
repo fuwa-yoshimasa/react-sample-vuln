@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Loading from "../../components/commons/Loading";
-import V003InputDescription from "../../components/V000/V003InputDescription";
+import V003DescriptionInput from "../../components/V000/V003DescriptionInput";
+import V003Form from "../../components/V000/V003Form";
 import { useGetVulnData } from "../../hooks/V000/V003Hooks";
 import { useAppDispatch, useAppSelector } from "../../store";
 
@@ -26,14 +27,8 @@ const V003: NextPageWithDefaultLayout = () => {
 
     return (
         <>
-            <Container>
-                <Row sm={1}>
-                    <Col>
-                        <V003InputDescription />
-                    </Col>
-                </Row>
-                <Loading selector={loadingSelector} />
-            </Container>
+            <V003Form cve={cve} />
+            <Loading selector={loadingSelector} />
         </>
     );
 };

@@ -6,7 +6,7 @@ type PropType = {
     cve: string;
 };
 
-const V002Buttons: React.FC<PropType> = ({ cve }) => {
+const V002Buttons = ({ cve }: PropType) => {
     return (
         <Container className="mt-2 mb-2">
             <Row>

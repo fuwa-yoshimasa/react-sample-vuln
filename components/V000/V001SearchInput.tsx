@@ -6,7 +6,7 @@ import {
 } from "../../hooks/V000/V001Hooks";
 import { useAppDispatch, useAppSelector } from "../../store";
 
-const V001SearchInput: React.FC = () => {
+const V001SearchInput = () => {
     const dispatch = useAppDispatch();
 
     const searchText = useAppSelector((state) => state.v001.searchText);

@@ -23,12 +23,22 @@ export type V003Cvss2MetricsType = {
     availabilityImpact?: "NONE" | "PARTIAL" | "COMPLETE";
 };
 
+export type V003CvssV3Type = {
+    baseScore: string;
+    metrics: V003Cvss3MetricsType;
+};
+
+export type V003CvssV2Type = {
+    baseScore: string;
+    metrics: V003Cvss2MetricsType;
+};
+
 // 入力用脆弱性情報
 export type V003InputVulnType = {
     description: string;
     cvss: {
-        v3: { baseScore: number; metrics: V003Cvss3MetricsType };
-        v2: { baseScore: number; metrics: V003Cvss2MetricsType };
+        v3: V003CvssV3Type;
+        v2: V003CvssV2Type;
     };
     references: string[];
     publishedDate: string | undefined;
@@ -68,6 +78,12 @@ export const V003Slice = createSlice({
     reducers: {
         setDescription: (state, action: PayloadAction<string>) => {
             state.inputVulnData.description = action.payload;
+        },
+        setCvssV3: (state, action: PayloadAction<V003CvssV3Type>) => {
+            state.inputVulnData.cvss.v3 = action.payload;
+        },
+        setCvssV2: (state, action: PayloadAction<V003CvssV2Type>) => {
+            state.inputVulnData.cvss.v2 = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -162,7 +178,7 @@ export const getVulnDataThunk = createAsyncThunk<V003InputVulnType, string>(
 );
 
 // このStateのAction
-export const { setDescription } = V003Slice.actions;
+export const { setDescription, setCvssV3, setCvssV2 } = V003Slice.actions;
 
 // このStateのReducer
 export default V003Slice.reducer;

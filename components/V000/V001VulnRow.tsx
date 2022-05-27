@@ -8,7 +8,7 @@ export type V001VulnRowProps = {
     cveItem: DefCveItem;
 };
 
-const V001VulnRow: React.FC<V001VulnRowProps> = ({ cveItem }) => {
+const V001VulnRow = ({ cveItem }: V001VulnRowProps) => {
     const router = useRouter();
 
     const cve = cveItem.cve?.CVE_data_meta?.ID;

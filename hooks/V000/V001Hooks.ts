@@ -8,6 +8,7 @@ import {
 // hooks
 
 // 検索文字列保存
+// hookにするほどでもないのかな。。。どっちがいいのやろ
 export const useSetSearchText = () => {
     const dispatch = useAppDispatch();
     const setter = (e: React.ChangeEvent<HTMLInputElement>) => {

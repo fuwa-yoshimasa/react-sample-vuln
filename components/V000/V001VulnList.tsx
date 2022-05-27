@@ -11,7 +11,7 @@ const V001VulnList = () => {
     const searchVulnData = useSearchVulnData();
     const vulnData = useAppSelector((state) => state.v001.vulnData);
     const searchText = useAppSelector((state) => state.v001.searchText);
-    console.log(vulnData);
+
     const handleSelectPage = (page: number, startIndex: number) => {
         searchVulnData(searchText, startIndex);
     };
