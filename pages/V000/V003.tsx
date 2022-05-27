@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Loading from "../../components/commons/Loading";
+import V003InputDescription from "../../components/V000/V003InputDescription";
 import { useGetVulnData } from "../../hooks/V000/V003Hooks";
 import { useAppDispatch, useAppSelector } from "../../store";
 
@@ -27,7 +28,9 @@ const V003: NextPageWithDefaultLayout = () => {
         <>
             <Container>
                 <Row sm={1}>
-                    <Col>{test.description}</Col>
+                    <Col>
+                        <V003InputDescription />
+                    </Col>
                 </Row>
                 <Loading selector={loadingSelector} />
             </Container>

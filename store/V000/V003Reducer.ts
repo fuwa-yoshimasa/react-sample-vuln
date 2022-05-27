@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { type } from "os";
 import { CveResponse } from "../../types/public_api/cve-apires-types";
 
@@ -65,7 +65,11 @@ const initialState: V003StateType = {
 export const V003Slice = createSlice({
     name: "V003",
     initialState,
-    reducers: {},
+    reducers: {
+        setDescription: (state, action: PayloadAction<string>) => {
+            state.inputVulnData.description = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getVulnDataThunk.pending, (state) => {
             state.loading = true;
@@ -158,7 +162,7 @@ export const getVulnDataThunk = createAsyncThunk<V003InputVulnType, string>(
 );
 
 // このStateのAction
-//export const {} = V003Slice.actions;
+export const { setDescription } = V003Slice.actions;
 
 // このStateのReducer
 export default V003Slice.reducer;
