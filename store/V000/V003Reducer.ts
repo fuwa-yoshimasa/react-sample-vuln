@@ -24,6 +24,11 @@ export type V003CvssV2Type = {
     metrics: V003Cvss2MetricsType;
 };
 
+export type V003CpeType = {
+    seq: number;
+    cpe23Uri: string;
+};
+
 export type V003ReferencesType = {
     seq: number;
     url: string;
@@ -36,6 +41,7 @@ export type V003InputVulnType = {
         v3: V003CvssV3Type;
         v2: V003CvssV2Type;
     };
+    cpe: V003CpeType[];
     references: V003ReferencesType[];
     publishedDate: string | undefined;
     lastModifiedDate: string | undefined;
@@ -61,6 +67,7 @@ const initialState: V003StateType = {
                 metrics: {},
             },
         },
+        cpe: [],
         references: [],
         publishedDate: undefined,
         lastModifiedDate: undefined,
@@ -81,8 +88,20 @@ export const V003Slice = createSlice({
         setCvssV2: (state: V003StateType, action: PayloadAction<V003CvssV2Type>) => {
             state.inputVulnData.cvss.v2 = action.payload;
         },
+        setCpe: (state: V003StateType, action: PayloadAction<V003CpeType[]>) => {
+            state.inputVulnData.cpe = action.payload;
+        },
         setReferences: (state: V003StateType, action: PayloadAction<V003ReferencesType[]>) => {
             state.inputVulnData.references = action.payload;
+        },
+        setPublishedDate: (state: V003StateType, action: PayloadAction<string>) => {
+            state.inputVulnData.publishedDate = action.payload;
+        },
+        setLastModifiedDate: (state: V003StateType, action: PayloadAction<string>) => {
+            state.inputVulnData.lastModifiedDate = action.payload;
+        },
+        clearInputData: (state: V003StateType) => {
+            state.inputVulnData = { ...initialState.inputVulnData };
         },
     },
     extraReducers: (builder) => {
@@ -135,6 +154,14 @@ export const getVulnDataThunk = createAsyncThunk<V003InputVulnType, string>("V00
                     },
                 },
             },
+            cpe:
+                cveItem?.configurations?.nodes?.flatMap(
+                    (node, index1) =>
+                        node.cpe_match?.map((cpe, index2) => ({
+                            seq: index2,
+                            cpe23Uri: cpe.cpe23Uri,
+                        })) ?? []
+                ) ?? [],
             references: cveItem?.cve?.references?.reference_data?.map((d, index) => ({ seq: index, url: d.url })),
             publishedDate: cveItem?.publishedDate,
             lastModifiedDate: cveItem?.lastModifiedDate,
@@ -144,7 +171,7 @@ export const getVulnDataThunk = createAsyncThunk<V003InputVulnType, string>("V00
 });
 
 // このStateのAction
-export const { setDescription, setCvssV3, setCvssV2, setReferences } = V003Slice.actions;
+export const { setDescription, setCvssV3, setCvssV2, setCpe, setReferences, setPublishedDate, setLastModifiedDate, clearInputData } = V003Slice.actions;
 
 // このStateのReducer
 export default V003Slice.reducer;

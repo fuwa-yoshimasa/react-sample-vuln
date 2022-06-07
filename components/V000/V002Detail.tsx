@@ -71,11 +71,30 @@ const V002Detail = ({ cve }: PropType) => {
                                 </Tabs>
                             </Card.Body>
                             <Card.Body>
+                                <Card.Title className="fw-bold">CPE</Card.Title>
+                                <Table striped bordered hover size="sm">
+                                    <thead>
+                                        <tr>
+                                            <th className="bg-primary text-white">CPE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {cveItem?.configurations?.nodes?.map((node) =>
+                                            node.cpe_match?.map((cpe) => (
+                                                <tr key={cpe.cpe23Uri}>
+                                                    <td className="text-break">{cpe.cpe23Uri}</td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </Table>
+                            </Card.Body>
+                            <Card.Body>
                                 <Card.Title className="fw-bold">References to Advisories, Solutions, and Tools</Card.Title>
                                 <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
-                                            <th className="bg-primary bg-gradient text-white bg-opacity-75">References</th>
+                                            <th className="bg-primary text-white">References</th>
                                         </tr>
                                     </thead>
                                     <tbody>
